@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movies_app/services/api_services.dart';
 import 'package:movies_app/utils/constant.dart';
+
+import '../../models/movie.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -10,6 +13,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Movie>? movies;
+
+  @override
+  void initState() {
+    super.initState();
+    getMovies();
+  }
+
+  void getMovies() {
+    APIService().getPopularMovies(pageNumber: 1).then((movieList) {
+      setState(() {
+        movies = movieList;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,17 +40,16 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ListView(
         children: [
           Container(
-            height: 500,
-            color: Colors.red,
-          ),
+              height: 500,
+              color: Colors.red,
+              child: movies == null
+                  ? const Center()
+                  : Image.network(movies![0].posterURL(), fit: BoxFit.cover)),
           const SizedBox(height: 15),
           Text(
             'Tendances actuelles',
             style: GoogleFonts.poppins(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold
-            ),
+                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 5,
@@ -46,22 +64,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     margin: const EdgeInsets.only(right: 8),
                     width: 110,
                     color: Colors.yellow,
-                    child: Center(
-                      child: Text(index.toString()),
-                    ),
+                    child: movies == null
+                        ? Center(child: Text(index.toString()),)
+                        : Image.network(movies![index].posterURL(), fit: BoxFit.cover)
                   );
-                }
-            ),
+                }),
           ),
-
           const SizedBox(height: 15),
           Text(
             'Actuellement au cinéma',
             style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold
-            ),
+                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 5,
@@ -80,18 +93,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text(index.toString()),
                     ),
                   );
-                }
-            ),
+                }),
           ),
-
           const SizedBox(height: 15),
           Text(
             'Ils arrivent bientôt',
             style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold
-            ),
+                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 5,
@@ -110,8 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text(index.toString()),
                     ),
                   );
-                }
-            ),
+                }),
           ),
         ],
       ),
