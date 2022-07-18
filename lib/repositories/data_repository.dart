@@ -25,4 +25,8 @@ class DataRepository with ChangeNotifier {
       rethrow;
     }
   }
+
+  Future<void> initData() async {
+    await getPopularMovies();
+  }
 }
