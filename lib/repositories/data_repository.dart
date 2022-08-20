@@ -12,11 +12,17 @@ class DataRepository with ChangeNotifier {
   int _nowPlayingPageIndex = 1;
   final List<Movie> _upComingMovieList = [];
   int _upComingPageIndex = 1;
+  final List<Movie> _animationMovieList = [];
+  int _animationMoviePageIndex = 1;
+  final List<Movie> _actionMovieList = [];
+  int _actionMoviePageIndex = 1;
 
   //getters
   List<Movie> get popularMovieList => _popularMovieList;
   List<Movie> get nowPlayingList => _nowPlayingList;
   List<Movie> get upComingMovieList => _upComingMovieList;
+  List<Movie> get animationMovieList => _animationMovieList;
+  List<Movie> get actionMovieList => _actionMovieList;
 
   Future<void> getPopularMovies() async {
     try {
@@ -48,9 +54,37 @@ class DataRepository with ChangeNotifier {
 
   Future<void> getUpComingMovies() async {
     try {
-      List<Movie> movies = await apiService.getUpComing(pageNumber: _nowPlayingPageIndex);
+      List<Movie> movies = await apiService.getUpComing(pageNumber: _upComingPageIndex);
       _upComingMovieList.addAll(movies);
       _upComingPageIndex++;
+      notifyListeners();
+    } on Response catch (response) {
+      if (kDebugMode) {
+        print("ERROR: ${response.statusCode}");
+      }
+      rethrow;
+    }
+  }
+
+  Future<void> getAnimationMovies() async {
+    try {
+      List<Movie> movies = await apiService.getAnimationMovies(pageNumber: _animationMoviePageIndex);
+      _animationMovieList.addAll(movies);
+      _animationMoviePageIndex++;
+      notifyListeners();
+    } on Response catch (response) {
+      if (kDebugMode) {
+        print("ERROR: ${response.statusCode}");
+      }
+      rethrow;
+    }
+  }
+
+  Future<void> getActionMovies() async {
+    try {
+      List<Movie> movies = await apiService.getActionMovies(pageNumber: _actionMoviePageIndex);
+      _actionMovieList.addAll(movies);
+      _actionMoviePageIndex++;
       notifyListeners();
     } on Response catch (response) {
       if (kDebugMode) {
@@ -64,5 +98,7 @@ class DataRepository with ChangeNotifier {
     await getPopularMovies();
     await getNowPlaying();
     await getUpComingMovies();
+    await getAnimationMovies();
+    await getActionMovies();
   }
 }
