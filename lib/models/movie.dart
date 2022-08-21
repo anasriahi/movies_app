@@ -59,7 +59,7 @@ class Movie {
       if (i == genres!.length -1) {
         categories = categories + genres![i];
       } else {
-        categories = categories + '${genres![i]} ';
+        categories = categories + '${genres![i]}, ';
       }
     }
     return categories;
