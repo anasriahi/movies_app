@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_app/models/movie.dart';
 import 'package:movies_app/repositories/data_repository.dart';
+import 'package:movies_app/ui/widgets/action_button.dart';
 import 'package:movies_app/ui/widgets/movie_info.dart';
 import 'package:movies_app/utils/constant.dart';
 import 'package:provider/provider.dart';
@@ -49,17 +50,34 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                 ),
               )
             : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView(
                   children: [
                     Container(
                       height: 220,
                       width: MediaQuery.of(context).size.width,
                       color: Colors.red,
                     ),
-                    MovieInfo(movie: newMovie!)
+                    MovieInfo(movie: newMovie!),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ActionButton(
+                        label: 'Lecture',
+                        icon: Icons.play_arrow,
+                        bgColor: Colors.white,
+                        textColor: kBackgroundColor),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ActionButton(
+                        label: 'Télécharger la vidéo',
+                        icon: Icons.download,
+                        bgColor: Colors.grey.withOpacity(0.3),
+                        textColor: Colors.white
+                    ),
                   ],
                 ),
-            ));
+              ));
   }
 }
