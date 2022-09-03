@@ -5,6 +5,7 @@ import 'package:movies_app/models/movie.dart';
 import 'package:movies_app/repositories/data_repository.dart';
 import 'package:movies_app/ui/widgets/action_button.dart';
 import 'package:movies_app/ui/widgets/movie_info.dart';
+import 'package:movies_app/ui/widgets/my_video_player.dart';
 import 'package:movies_app/utils/constant.dart';
 import 'package:provider/provider.dart';
 
@@ -54,10 +55,17 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                 child: ListView(
                   children: [
                     Container(
-                      height: 220,
-                      width: MediaQuery.of(context).size.width,
-                      color: Colors.red,
-                    ),
+                        height: 220,
+                        width: MediaQuery.of(context).size.width,
+                        child: newMovie!.videos!.isEmpty
+                            ? Center(
+                                child: Text(
+                                  'Pas de videos',
+                                  style:
+                                      GoogleFonts.poppins(color: Colors.white),
+                                ),
+                              )
+                            : MyVideoPlayer(movieId: newMovie!.videos!.first)),
                     MovieInfo(movie: newMovie!),
                     const SizedBox(
                       height: 10,
@@ -74,8 +82,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                         label: 'Télécharger la vidéo',
                         icon: Icons.download,
                         bgColor: Colors.grey.withOpacity(0.3),
-                        textColor: Colors.white
-                    ),
+                        textColor: Colors.white),
                   ],
                 ),
               ));

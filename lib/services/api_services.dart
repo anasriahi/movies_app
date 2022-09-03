@@ -135,6 +135,21 @@ class APIService {
     }
   }
 
+  Future<Movie> getMovieVideos({ required Movie movie }) async {
+    Response response = await getData('/movie/${movie.id}/videos');
+    if (response.statusCode == 200) {
+      Map _data = response.data;
+
+      List<String> videoKeys = _data['results'].map<String>((videoJson) {
+        return videoJson['key'] as String;
+      }).toList();
+
+      return movie.copyWith(videos: videoKeys);
+    } else {
+      throw response;
+    }
+  }
+
 }
 
 

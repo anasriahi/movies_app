@@ -8,6 +8,7 @@ class Movie {
   final List<String>? genres;
   final String? releaseDate;
   final double? vote;
+  final List<String>? videos;
 
   const Movie({
     required this.id,
@@ -16,7 +17,8 @@ class Movie {
     this.posterPath,
     this.genres,
     this.releaseDate,
-    this.vote
+    this.vote,
+    this.videos
   });
 
   Movie copyWith({
@@ -26,16 +28,18 @@ class Movie {
     String? posterPath,
     List<String>? genres,
     String? releaseDate,
-    double? vote
+    double? vote,
+    List<String>? videos
   }) {
     return Movie(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      posterPath: posterPath ?? this.posterPath,
-      genres: genres ?? this.genres,
-      releaseDate: releaseDate ?? this.releaseDate,
-      vote: vote ?? this.vote
+        id: id ?? this.id,
+        name: name ?? this.name,
+        description: description ?? this.description,
+        posterPath: posterPath ?? this.posterPath,
+        genres: genres ?? this.genres,
+        releaseDate: releaseDate ?? this.releaseDate,
+        vote: vote ?? this.vote,
+        videos: videos ?? this.videos
     );
   }
 
