@@ -1,3 +1,4 @@
+import 'package:movies_app/models/person.dart';
 import 'package:movies_app/services/api.dart';
 
 class Movie {
@@ -9,28 +10,32 @@ class Movie {
   final String? releaseDate;
   final double? vote;
   final List<String>? videos;
+  final List<Person>? casting;
+  final List<String>? images;
 
-  const Movie({
-    required this.id,
-    required this.name,
-    required this.description,
-    this.posterPath,
-    this.genres,
-    this.releaseDate,
-    this.vote,
-    this.videos
-  });
+  const Movie(
+      {required this.id,
+      required this.name,
+      required this.description,
+      this.posterPath,
+      this.genres,
+      this.releaseDate,
+      this.vote,
+      this.videos,
+      this.casting,
+      this.images});
 
-  Movie copyWith({
-    int? id,
-    String? name,
-    String? description,
-    String? posterPath,
-    List<String>? genres,
-    String? releaseDate,
-    double? vote,
-    List<String>? videos
-  }) {
+  Movie copyWith(
+      {int? id,
+      String? name,
+      String? description,
+      String? posterPath,
+      List<String>? genres,
+      String? releaseDate,
+      double? vote,
+      List<String>? videos,
+      List<Person>? casting,
+      List<String>? images}) {
     return Movie(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -39,7 +44,9 @@ class Movie {
         genres: genres ?? this.genres,
         releaseDate: releaseDate ?? this.releaseDate,
         vote: vote ?? this.vote,
-        videos: videos ?? this.videos
+        videos: videos ?? this.videos,
+        casting: casting ?? this.casting,
+        images: images ?? this.images
     );
   }
 
@@ -59,8 +66,8 @@ class Movie {
 
   String reformatGenres() {
     String categories = '';
-    for(int i = 0; i < genres!.length; i++) {
-      if (i == genres!.length -1) {
+    for (int i = 0; i < genres!.length; i++) {
+      if (i == genres!.length - 1) {
         categories = categories + genres![i];
       } else {
         categories = categories + '${genres![i]}, ';

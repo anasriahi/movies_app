@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:movies_app/models/movie.dart';
+import 'package:movies_app/models/person.dart';
 import 'package:movies_app/services/api.dart';
 
 class APIService {
@@ -150,6 +151,37 @@ class APIService {
     }
   }
 
+  Future<Movie> getMovieCasting({ required Movie movie }) async {
+    Response response = await getData('/movie/${movie.id}/credits');
+    if (response.statusCode == 200) {
+      Map _data = response.data;
+
+      List<Person> _casting = _data['cast'].map<Person>((dynamic personJson) {
+        return Person.fromJson(personJson);
+      }).toList();
+
+      return movie.copyWith(casting: _casting);
+    } else {
+      throw response;
+    }
+  }
+
+  Future<Movie> getMovieImages({ required Movie movie }) async {
+    Response response = await getData('/movie/${movie.id}/images', params: {
+      'include_image_language': 'null'
+    });
+    if (response.statusCode == 200) {
+      // On récupère les images
+      Map _data = response.data;
+      List<String> imagePath = _data['backdrops'].map<String>((dynamic imageJson) {
+        return imageJson['file_path'] as String;
+      }).toList();
+
+      return movie.copyWith(images: imagePath);
+    } else {
+      throw response;
+    }
+  }
 }
 
 
