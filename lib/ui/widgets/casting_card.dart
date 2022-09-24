@@ -39,23 +39,18 @@ class CastingCard extends StatelessWidget {
               ),
             ),
           Padding(
-            padding: const EdgeInsets.only(
-              top: 10,
-              left: 10,
-            ),
+            padding: const EdgeInsets.all(5.0),
             child: SizedBox(
               width: 150,
               child: Text(
-                person.name,
+                person.characterName,
                 style: GoogleFonts.poppins(
                     fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              left: 10,
-            ),
+            padding: const EdgeInsets.all(5.0),
             child: SizedBox(
               width: 150,
               child: Text(
